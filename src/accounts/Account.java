@@ -106,4 +106,35 @@ public class Account {
                 ", balance=" + balance +
                 '}';
     }
+
+    /**
+     * Simple demonstration main for the Account class.
+     * Shows deposit, withdraw (with insufficient funds handling) and transfer.
+     */
+    public static void main(String[] args) {
+        Account a = new Account("A100", "Alice", 1000.0);
+        Account b = new Account("B200", "Bob", 300.0);
+
+        System.out.println("[Account.main] Initial:\n  " + a + "\n  " + b);
+
+        a.deposit(200.0);
+        System.out.println("[Account.main] After depositing 200 to A: " + a);
+
+        try {
+            a.withdraw(1500.0);
+        } catch (InsufficientFundsException e) {
+            System.out.println("[Account.main] Expected insufficient funds: " + e.getMessage());
+        }
+
+        try {
+            a.transferTo(b, 500.0);
+            System.out.println("[Account.main] After transferring 500 from A to B:");
+            System.out.println("  " + a);
+            System.out.println("  " + b);
+        } catch (InsufficientFundsException e) {
+            System.out.println("[Account.main] Transfer failed: " + e.getMessage());
+        }
+
+        System.out.println("[Account.main] Final:\n  " + a + "\n  " + b);
+    }
 }
